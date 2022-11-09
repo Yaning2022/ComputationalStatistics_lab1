@@ -1,0 +1,110 @@
+---
+title: "Lab1"
+output: html_document
+date: "2022-11-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Question 1: Be careful when comparing
+```{r}
+x1<-1/3
+x2<-1/4
+if(x1-x2==1/12){
+print ( "Subtraction is correct " )
+  }else{
+print ( " Subtraction is wrong" )
+}
+```
+
+```{r}
+x1<-1
+x2<-1/2
+if(x1-x2==1/2){
+print ( "Subtraction is correct " )
+  }else{
+print ( " Subtraction is wrong" )
+}
+```
+
+When we calculate the two function,because the computer use floating points system to represent fractions, that leads the first one should be right, but it runs incorrectly.
+
+2.improve the first function
+```{r}
+x1<-1/3
+x2<-1/4
+if(all.equal(x1-x2,1/12)==TRUE){
+print ( "Subtraction is correct " )
+  }else{
+print ( " Subtraction is wrong" )
+}
+```
+## Question 2: Derivative
+1.Write R function: 1.Write R function: myvar
+```{r}
+derivative<-function(x){
+  sigma<-10^-15
+  deri<-(x+sigma-x)/sigma
+  return(deri)
+}
+```
+
+
+2.Evaluate derivative function at x = 1 and x = 100000.
+```{r }
+x<-1
+derivative(x)
+x<-100000
+derivative(x)
+```
+## Question 3: Variance
+
+1.Write R function: myvar
+```{r }
+myvar<-function(x){
+  n<-length(x)
+  variance<-1/(n-1)*(sum(x^2)-1/n*(sum(x)^2))
+  return(variance)
+}
+```
+2.Generate vector x
+```{r}
+set.seed(123)
+x<-rnorm(10000,10^8,1)
+```
+3.Plot the dependence Yi on i.
+```{r}
+Y<-c()
+for(i in 1:10000){
+  xi<-x[1:i]
+  Yi<-myvar(xi)-var(xi)
+  Y<-c(Y,Yi)
+}
+plot(1:10000,Y)
+```
+
+From the function and figure,we know that :The variance calculated with myvar function and the variance calculated with var function have different values and the variance calculated with myvar function also has some negative values.When we calculate variance using
+$\sum_{i=1}^{n} x_{i}^2$minus$\frac{1}{n}$$(\sum_{i=1}^{n} x_{i})^2$,the square value is huge,and then we minus ,the difference will become greater. So in the fourth part we will use the new formula for the calculation, subtracting first and then squaring  
+
+4.improve myvar function(myvar_new)
+
+```{r}
+set.seed(123)
+x<-rnorm(10000,10^8,1)
+Y<-c()
+myvar2<-function(x){
+  n<-length(x)
+  var_new<-sum((x-sum(x)/n)^2)/(n-1)
+  return(var_new)
+}
+for(i in 1:10000){
+  xi<-x[1:i]
+  Yi<-myvar2(xi)-var(xi)
+  Y<-c(Y,Yi)
+}
+plot(1:10000,Y,ylim = c(-4,4))
+```
+
+## Question 4: Binomial coeffcient
+
