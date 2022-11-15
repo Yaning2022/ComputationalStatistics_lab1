@@ -72,6 +72,12 @@ The new formula is$var(\vec{x})=\frac{1}{n-1}(\sum_{i=0}^n(x_i-\overline{x})^{2}
 
 **1.Even if overflow and underflow would not occur these expressions will not work correctly for all values of n and k. Explain what is the problem in A, B and C respectively.**
 
+When k is equal to 0 or n,from the mathematical formula,
+we know the binomial coefficient value is 1.
+But from function A,the value is Inf.
+When k is equal to n,from the formula,
+we know the binomial coefficient value is 1.
+But from function B and C,the value is Inf.
 
 **2.In mathematical formula one should suspect overflow to occur when parameters, here n and k, are large. Experiment numerically with the code of A, B and C, for different values of n and k to see whether overflow occurs. Graphically present the results of your experiments.**
 
